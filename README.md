@@ -1,7 +1,7 @@
 # zsh-powerline
 A modular powerline for zsh written in python
 
-In the testing stages right now
+No support for a right prompt yet, but it's coming.
 
 To install:
 ```
