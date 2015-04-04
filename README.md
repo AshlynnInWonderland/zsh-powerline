@@ -11,3 +11,5 @@ To install:
 ```
 curl https://raw.githubusercontent.com/AshlynnInWonderland/zsh-powerline/master/setup.sh | sh -
 ```
+
+Requires a [patched powerline font](https://github.com/powerline/fonts)
