@@ -1,8 +1,6 @@
 # encoding: utf-8
 from os import getcwd
-# from config import loadCfg
-
-# config = loadCfg()
+from config import loadCfg
 
 def fmtColor(color, bold=False, fg=True):
     if bold:
@@ -17,9 +15,8 @@ def fmtColor(color, bold=False, fg=True):
     
     return '%{' + '${esc}' + strBold + strColor + str(color) + 'm%}'
 
-# TODO: implement transparent background and alt_lsep (messy) - cannot fix willnot fix
 # TODO: implement rprompt (tiring)
-def fmtZsh(lprompt=[], rprompt=[], shelf={}):
+def fmtZsh(lprompt=[], rprompt=[], shelf={}, errors=[]):
     promptText = ''
     first = True
     lastColor = ''
@@ -51,26 +48,31 @@ def fmtZsh(lprompt=[], rprompt=[], shelf={}):
         promptText += altArrow
     # reset color and boldness
     promptText += '${reset_color}%b '
-    return 'local esc=$\'' + chr(27) + '\[\'\n' + 'PROMPT="' + promptText + '"'
+    rtnString = 'local esc=$\'' + chr(27) + '\[\'\n' + 'PROMPT="' + promptText + '"'
+    for error in errors:
+        rtnString += '\n' + error
+    return rtnString
 
 # Testing
 if __name__ == '__main__':
-    print fmtZsh(lprompt=[
-        {
-            "text":"ASHLYNN",
-            "bg":190,
-            "fg":17,
-            "bold":True
-        },
-        {
-            "text":" master",
-            "bg":238,
-            "fg":255,
-            "bold":False
-        }
-    ],
-    shelf={
-        "text":getcwd(),
-        "fg":85,
-        "bold":False
-    })
+    cfg = loadCfg()
+    print(fmtZsh(lprompt=cfg['lprompt'],shelf=cfg['shelf']))
+    # print(fmtZsh(lprompt=[
+    #     {
+    #         "text":"ASHLYNN",
+    #         "bg":190,
+    #         "fg":17,
+    #         "bold":True
+    #     },
+    #     {
+    #         "text":" master",
+    #         "bg":238,
+    #         "fg":255,
+    #         "bold":False
+    #     }
+    # ],
+    # shelf={
+    #     "text":getcwd(),
+    #     "fg":85,
+    #     "bold":False
+    # }))

@@ -1,5 +1,5 @@
 function __zline {
-  source <( python2 ~/git/zsh-powerline/zsh_powerline/formatting.py )
+  source <( python3 ~/git/zsh-powerline/zsh_powerline/load.py )
 }
 
 if [[ ! ${precmd_functions[(r)__zline]} == __zline ]]; then
