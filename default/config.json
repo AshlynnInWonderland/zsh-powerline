@@ -1,0 +1,26 @@
+{
+  "lprompt": [
+    {
+      "module": "user",
+      "fg": "17",
+      "bg": "190",
+      "bold": 1
+    },
+    {
+      "module": "git",
+      "fg": "255",
+      "bg": "238",
+      "bold": 0
+    }
+  ],
+
+  "shelf": {
+    "module": "cwd",
+    "fg": "85",
+    "bold": 0
+  },
+
+  "rprompt": [
+
+  ]
+}
