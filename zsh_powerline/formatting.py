@@ -2,11 +2,13 @@
 from os import getcwd
 from config import loadCfg
 
-def fmtColor(color, bold=False, fg=True):
-    if bold:
+def fmtColor(color, bold=False, fg=True, first=False, wlb=False):
+    if first and bold:
         strBold = '${fg_bold}'
-    else:
+    elif first and wlb:
         strBold = '${fg_no_bold}'
+    else:
+        strBold = ''
 
     if fg:
         strColor = '38;5;'
@@ -20,6 +22,7 @@ def fmtZsh(lprompt=[], rprompt=[], shelf={}, errors=[]):
     promptText = ''
     first = True
     lastColor = ''
+    wasLastBold = False
     arrow = ''
     altArrow = ''
     # build main body of prompt
@@ -31,7 +34,8 @@ def fmtZsh(lprompt=[], rprompt=[], shelf={}, errors=[]):
         else:
             first = False
         lastColor = prompt['bg']
-        promptText += fmtColor(prompt['fg'], bold=prompt['bold'], fg=True)
+        promptText += fmtColor(prompt['fg'], bold=prompt['bold'], fg=True, first=True, wlb=wasLastBold)
+        wasLastBold = prompt['bold']
         if not prompt['text'] == '':
             promptText += ' ' + prompt['text'] + ' '
     # reset background and add trailing arrow
@@ -40,14 +44,14 @@ def fmtZsh(lprompt=[], rprompt=[], shelf={}, errors=[]):
     promptText += arrow
     # shelf 
     if shelf:
-        promptText += fmtColor(shelf['fg'], bold=shelf['bold'], fg=True)
+        promptText += fmtColor(shelf['fg'], bold=shelf['bold'], fg=True, first=True, wlb=wasLastBold)
         if not shelf['text'] == '':
             promptText += ' ' + shelf['text'] + ' '
         else:
             promptText += shelf['text']
         promptText += altArrow
     # reset color and boldness
-    promptText += '${reset_color}%b '
+    promptText += '%{${esc}0m%} '
     rtnString = 'local esc=$\'' + chr(27) + '\[\'\n' + 'PROMPT="' + promptText + '"'
     for error in errors:
         rtnString += '\n' + error
