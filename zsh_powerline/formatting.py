@@ -39,7 +39,7 @@ def fmtZsh(lprompt=[], rprompt=[], shelf={}, errors=[]):
         if not prompt['text'] == '':
             promptText += ' ' + prompt['text'] + ' '
     # reset background and add trailing arrow
-    promptText += '${reset_color}'
+    promptText += '%{${esc}0m%}'
     promptText += fmtColor(lastColor, bold=prompt['bold'], fg=True)
     promptText += arrow
     # shelf 
