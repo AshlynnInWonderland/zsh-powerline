@@ -26,22 +26,23 @@ def fmtZsh(lprompt=[], rprompt=[], shelf={}, errors=[]):
     arrow = ''
     altArrow = ''
     # build main body of prompt
-    for prompt in lprompt:
-        promptText += fmtColor(prompt['bg'], bold=prompt['bold'], fg=False)
-        if not first:
-            promptText += fmtColor(lastColor, bold=prompt['bold'], fg=True)
-            promptText += arrow
-        else:
-            first = False
-        lastColor = prompt['bg']
-        promptText += fmtColor(prompt['fg'], bold=prompt['bold'], fg=True, first=True, wlb=wasLastBold)
-        wasLastBold = prompt['bold']
-        if not prompt['text'] == '':
-            promptText += ' ' + prompt['text'] + ' '
-    # reset background and add trailing arrow
-    promptText += '%{${esc}0m%}'
-    promptText += fmtColor(lastColor, bold=prompt['bold'], fg=True)
-    promptText += arrow
+    if lprompt:
+        for prompt in lprompt:
+            promptText += fmtColor(prompt['bg'], bold=prompt['bold'], fg=False)
+            if not first:
+                promptText += fmtColor(lastColor, bold=prompt['bold'], fg=True)
+                promptText += arrow
+            else:
+                first = False
+            lastColor = prompt['bg']
+            promptText += fmtColor(prompt['fg'], bold=prompt['bold'], fg=True, first=True, wlb=wasLastBold)
+            wasLastBold = prompt['bold']
+            if not prompt['text'] == '':
+                promptText += ' ' + prompt['text'] + ' '
+        # reset background and add trailing arrow
+        promptText += '%{${esc}0m%}'
+        promptText += fmtColor(lastColor, bold=prompt['bold'], fg=True)
+        promptText += arrow
     # shelf 
     if shelf:
         promptText += fmtColor(shelf['fg'], bold=shelf['bold'], fg=True, first=True, wlb=wasLastBold)

@@ -20,8 +20,11 @@ def loadAll():
             obj['text'] = loadModule(obj['module'], modpath)
         except:
             obj['text'] = ''
-    shelfmodpath = modules[cfg['shelf']['module']]
-    cfg['shelf']['text'] = loadModule(cfg['shelf']['module'], shelfmodpath)
+    try:
+        shelfmodpath = modules[cfg['shelf']['module']]
+        cfg['shelf']['text'] = loadModule(cfg['shelf']['module'], shelfmodpath)
+    except:
+        cfg['shelf'] = {}    
     return cfg
 
 if __name__ == '__main__':
